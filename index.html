@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Calculator with GST</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+
+      .calculator {
+        width: 90%;
+        max-width: 400px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      .calculator h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .row {
+        margin-bottom: 15px;
+      }
+
+      .row label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .row input {
+        width: 94%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .row .result {
+        background: #f9f9f9;
+        color: #333;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .buttons button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .buttons .calculate {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .buttons .calculate:hover {
+        background-color: #218838;
+      }
+
+      .buttons .clear {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .buttons .clear:hover {
+        background-color: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <h2>Price Calculator</h2>
+
+      <div class="row">
+        <label for="originalPrice">Original Price:</label>
+        <div class="result" id="originalPrice">0</div>
+      </div>
+
+      <div class="row">
+        <label for="discount">Discount (5%):</label>
+        <div class="result" id="discount">0</div>
+      </div>
+
+      <div class="row">
+        <label for="discountedPrice">Discounted Price:</label>
+        <input
+          type="number"
+          id="discountedPrice"
+          placeholder="Enter the discounted price"
+        />
+      </div>
+
+      <div class="row">
+        <label for="gst">GST (5%):</label>
+        <div class="result" id="gst">0</div>
+      </div>
+
+      <div class="row">
+        <label for="payableValue">Payable Value:</label>
+        <div class="result" id="payableValue">0</div>
+      </div>
+
+      <div class="buttons">
+        <button class="calculate" onclick="calculateValues()">Calculate</button>
+        <button class="clear" onclick="clearFields()">Clear</button>
+      </div>
+    </div>
+
+    <script>
+      function calculateValues() {
+        const discountedPrice =
+          parseFloat(document.getElementById("discountedPrice").value) || 0;
+
+        const originalPrice = discountedPrice / 0.95;
+        const discount = originalPrice - discountedPrice;
+        const gst = discountedPrice * 0.05;
+        const payableValue = discountedPrice + gst;
+
+        document.getElementById("originalPrice").textContent =
+          originalPrice.toFixed(2);
+        document.getElementById("discount").textContent = discount.toFixed(2);
+        document.getElementById("gst").textContent = gst.toFixed(2);
+        document.getElementById("payableValue").textContent =
+          payableValue.toFixed(2);
+      }
+
+      function clearFields() {
+        document.getElementById("discountedPrice").value = "";
+        document.getElementById("originalPrice").textContent = "0";
+        document.getElementById("discount").textContent = "0";
+        document.getElementById("gst").textContent = "0";
+        document.getElementById("payableValue").textContent = "0";
+      }
+    </script>
+  </body>
+</html>
