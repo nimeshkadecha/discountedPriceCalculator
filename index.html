@@ -99,27 +99,29 @@
       </div>
 
       <div class="row">
-        <label for="discount">Discount (5%):</label>
+        <label for="discount">Discount (10%):</label>
         <div class="result" id="discount">0</div>
       </div>
 
       <div class="row">
         <label for="discountedPrice">Discounted Price:</label>
-        <input
-          type="number"
-          id="discountedPrice"
-          placeholder="Enter the discounted price"
-        />
+        <div class="result" id="discountedPrice">0</div>
       </div>
 
       <div class="row">
-        <label for="gst">GST [2.5%]:</label>
+        <label for="gst">GST [5%]:</label>
         <div class="result" id="gst">0</div>
       </div>
 
+
       <div class="row">
         <label for="payableValue">Payable Value:</label>
-        <div class="result" id="payableValue">0</div>
+        <input
+          type="number"
+          id="payableValueInput"
+          placeholder="Enter the payable value"
+          oninput="calculateFromPayableValue()"
+        />
       </div>
 
       <div class="buttons">
@@ -131,9 +133,9 @@
     <script>
       function calculateValues() {
         const discountedPrice =
-          parseFloat(document.getElementById("discountedPrice").value) || 0;
+          parseFloat(document.getElementById("discountedPrice").textContent) || 0;
 
-        const originalPrice = discountedPrice / 0.95;
+        const originalPrice = discountedPrice / 0.90; // Updated discount to 10%
         const discount = originalPrice - discountedPrice;
         const gst = discountedPrice * 0.05;
         const payableValue = discountedPrice + gst;
@@ -146,12 +148,30 @@
           payableValue.toFixed(2);
       }
 
+      function calculateFromPayableValue() {
+        const payableValue =
+          parseFloat(document.getElementById("payableValueInput").value) || 0;
+
+        const gst = payableValue / 1.05 * 0.05;
+        const discountedPrice = payableValue - gst;
+        const originalPrice = discountedPrice / 0.90; // Updated discount to 10%
+        const discount = originalPrice - discountedPrice;
+
+        document.getElementById("originalPrice").textContent =
+          originalPrice.toFixed(2);
+        document.getElementById("discount").textContent = discount.toFixed(2);
+        document.getElementById("gst").textContent = gst.toFixed(2);
+        document.getElementById("discountedPrice").textContent =
+          discountedPrice.toFixed(2);
+      }
+
       function clearFields() {
-        document.getElementById("discountedPrice").value = "";
+        document.getElementById("discountedPrice").textContent = "0";
         document.getElementById("originalPrice").textContent = "0";
         document.getElementById("discount").textContent = "0";
         document.getElementById("gst").textContent = "0";
         document.getElementById("payableValue").textContent = "0";
+        document.getElementById("payableValueInput").value = "";
       }
     </script>
   </body>
