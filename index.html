@@ -125,7 +125,7 @@
       </div>
 
       <div class="buttons">
-        <button class="calculate" onclick="calculateValues()">Calculate</button>
+        <!-- <button class="calculate" onclick="calculateValues()">Calculate</button> -->
         <button class="clear" onclick="clearFields()">Clear</button>
       </div>
     </div>
@@ -166,12 +166,16 @@
       }
 
       function clearFields() {
-        document.getElementById("discountedPrice").textContent = "0";
+        // Reset all display fields to 0
         document.getElementById("originalPrice").textContent = "0";
         document.getElementById("discount").textContent = "0";
+        document.getElementById("discountedPrice").textContent = "0";
         document.getElementById("gst").textContent = "0";
-        document.getElementById("payableValue").textContent = "0";
-        document.getElementById("payableValueInput").value = "";
+        
+        // Clear the input field and trigger calculation
+        const payableInput = document.getElementById("payableValueInput");
+        payableInput.value = "";
+        calculateFromPayableValue(); // This will reset all calculations based on 0
       }
     </script>
   </body>
