@@ -109,10 +109,14 @@
       </div>
 
       <div class="row">
-        <label for="gst">GST [5%]:</label>
-        <div class="result" id="gst">0</div>
+        <label for="gst">CGST [2.5%]:</label>
+        <div class="result" id="cgst">0</div>
       </div>
 
+      <div class="row">
+        <label for="gst">SGST [2.5%]:</label>
+        <div class="result" id="sgst">0</div>
+      </div>
 
       <div class="row">
         <label for="payableValue">Payable Value:</label>
@@ -152,30 +156,30 @@
         const payableValue =
           parseFloat(document.getElementById("payableValueInput").value) || 0;
 
-        const gst = payableValue / 1.05 * 0.05;
-        const discountedPrice = payableValue - gst;
-        const originalPrice = discountedPrice / 0.90; // Updated discount to 10%
+        const totalGst = payableValue / 1.05 * 0.05;
+        const cgst = totalGst / 2; // Split GST into CGST
+        const sgst = totalGst / 2; // Split GST into SGST
+        const discountedPrice = payableValue - totalGst;
+        const originalPrice = discountedPrice / 0.90;
         const discount = originalPrice - discountedPrice;
 
         document.getElementById("originalPrice").textContent =
           originalPrice.toFixed(2);
         document.getElementById("discount").textContent = discount.toFixed(2);
-        document.getElementById("gst").textContent = gst.toFixed(2);
+        document.getElementById("cgst").textContent = cgst.toFixed(2);
+        document.getElementById("sgst").textContent = sgst.toFixed(2);
         document.getElementById("discountedPrice").textContent =
           discountedPrice.toFixed(2);
       }
 
       function clearFields() {
-        // Reset all display fields to 0
         document.getElementById("originalPrice").textContent = "0";
         document.getElementById("discount").textContent = "0";
         document.getElementById("discountedPrice").textContent = "0";
-        document.getElementById("gst").textContent = "0";
-        
-        // Clear the input field and trigger calculation
-        const payableInput = document.getElementById("payableValueInput");
-        payableInput.value = "";
-        calculateFromPayableValue(); // This will reset all calculations based on 0
+        document.getElementById("cgst").textContent = "0";
+        document.getElementById("sgst").textContent = "0";
+        document.getElementById("payableValueInput").value = "";
+        calculateFromPayableValue();
       }
     </script>
   </body>
